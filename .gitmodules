@@ -1,3 +1,3 @@
-[submodule "src/mprot"]
-	path = src/mprot
+[submodule "src/main/java/mprot"]
+	path = src/main/java/mprot
 	url = git@github.com:di-unipi-socc/paparelli.git
