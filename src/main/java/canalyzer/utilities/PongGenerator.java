@@ -7,7 +7,12 @@ import java.util.List;
 
 public class PongGenerator {
 
-    public static Node createPongNode(String name , ArrayList<String> requirements) {
+    /**
+     * @param name node's name
+     * @param requirements string list of node's requirements
+     * @return node created
+     */
+    public static Node createPongNode(String name, ArrayList<String> requirements) {
         Node pongNode = new Node(name, PongState.NAVAIL.toString(), new ManagementProtocol());
         ManagementProtocol pongMP = pongNode.getManagementProtocol();
 
@@ -27,7 +32,7 @@ public class PongGenerator {
         pongNode.addOperation(PongOperations.DELETE.toString());
 
         // Requirements
-        for ( String req : requirements) {
+        for (String req : requirements) {
             pongNode.addRequirement(new Requirement(req, RequirementSort.REPLICA_UNAWARE));
         }
 
