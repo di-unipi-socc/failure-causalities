@@ -7,7 +7,7 @@ import java.util.List;
 
 public class PongGenerator {
 
-    public static Node createPongManagementProtocol(String name , ArrayList<String> requirements) {
+    public static Node createPongNode(String name , ArrayList<String> requirements) {
         Node pongNode = new Node(name, PongState.NAVAIL.toString(), new ManagementProtocol());
         ManagementProtocol pongMP = pongNode.getManagementProtocol();
 
