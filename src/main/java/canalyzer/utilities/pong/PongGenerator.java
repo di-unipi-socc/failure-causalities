@@ -1,4 +1,4 @@
-package canalyzer.utilities;
+package canalyzer.utilities.pong;
 
 import model.*;
 
@@ -8,6 +8,7 @@ import java.util.List;
 public class PongGenerator {
 
     /**
+     * Create a Pong node initializing his fields
      * @param name node's name
      * @param requirements string list of node's requirements
      * @return node created

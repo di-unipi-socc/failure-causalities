@@ -1,4 +1,4 @@
-package canalyzer.utilities;
+package canalyzer.utilities.pong;
 
 public enum PongState {
     NAVAIL("not-avilable"),

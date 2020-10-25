@@ -1,4 +1,4 @@
-package canalyzer.utilities;
+package canalyzer.utilities.pong;
 
 public enum PongOperations {
     RUN("run"),
