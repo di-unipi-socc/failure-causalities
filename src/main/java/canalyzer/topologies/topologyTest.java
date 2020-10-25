@@ -1,6 +1,6 @@
 package canalyzer.topologies;
 
-import canalyzer.utilities.PongGenerator;
+import canalyzer.utilities.pong.PongGenerator;
 import model.Application;
 import model.Node;
 import model.PiVersion;
