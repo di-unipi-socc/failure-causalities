@@ -46,7 +46,7 @@ public class LogManager {
      */
     public synchronized boolean setLogFile(@NotNull String logFile) {
         if (!logFile.isBlank()) {
-            String logFolder = System.getProperty("user.dir") + "src/main/resources/pongLog/";
+            String logFolder = System.getProperty("user.dir") + "/src/main/resources/pongLog/";
             logFileName = logFolder + logFile;
             return true;
         }
@@ -91,7 +91,6 @@ public class LogManager {
                 logs.forEach((k , v) -> {
                     Collections.sort(v);
                 });
-
                 return true;
             } catch (IOException e) {
                 e.printStackTrace();

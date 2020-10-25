@@ -61,4 +61,17 @@ public class LogFormat implements Serializable, Comparable {
     public int hashCode() {
         return Objects.hash(container_id, container_name, docker_timestamp, app_timestamp, message, label, info);
     }
+
+    @Override
+    public String toString() {
+        return "{" +
+                "container_id='" + container_id + '\'' +
+                ", container_name='" + container_name + '\'' +
+                ", docker_timestamp='" + docker_timestamp + '\'' +
+                ", app_timestamp='" + app_timestamp + '\'' +
+                ", message='" + message + '\'' +
+                ", label='" + label + '\'' +
+                ", info='" + info + '\'' +
+                '}';
+    }
 }
