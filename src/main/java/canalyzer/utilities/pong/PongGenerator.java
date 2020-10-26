@@ -34,7 +34,7 @@ public class PongGenerator {
 
         // Requirements
         for (String req : requirements) {
-            pongNode.addRequirement(new Requirement(req, RequirementSort.REPLICA_UNAWARE));
+            pongNode.addRequirement(new Requirement(req, RequirementSort.REPLICA_AWARE));
         }
 
         // Transaction

@@ -46,8 +46,8 @@ public class LogManager {
      */
     public synchronized boolean setLogFile(@NotNull String logFile) {
         if (!logFile.isBlank()) {
-            String logFolder = System.getProperty("user.dir") + "/src/main/resources/pongLog/";
-            logFileName = logFolder + logFile;
+            String baseDirPath = System.getProperty("user.dir");
+            logFileName = baseDirPath + logFile;
             return true;
         }
         return false;
@@ -88,8 +88,8 @@ public class LogManager {
                 }
 
                 // For each element inside the Hashtable sort his list of LogFormat
-                logs.forEach((k , v) -> {
-                    Collections.sort(v);
+                logs.forEach((node_id , nodeLogs) -> {
+                    Collections.sort(nodeLogs);
                 });
                 return true;
             } catch (IOException e) {
