@@ -7,19 +7,23 @@ import java.util.Objects;
 
 // Class which identifies the format of Pong log format
 public class LogFormat implements Serializable, Comparable {
-    private String container_id;
-    private String container_name;
-    private String docker_timestamp;
-    private String app_timestamp;
+    private String nodeId;
+    private String nodeName;
+    private String nodeContainerId;
+    private String dockerTimestamp;
+    private String timestamp;
     private String message;
     private String label;
     private String info;
 
-    public LogFormat(String container_id, String container_name, String docker_timestamp, String app_timestamp, String message, String label, String info) {
-        this.container_id = container_id;
-        this.container_name = container_name;
-        this.docker_timestamp = docker_timestamp;
-        this.app_timestamp = app_timestamp;
+
+    public LogFormat(String nodeId, String nodeName, String nodeContainerId, String dockerTimestamp,
+                     String timestamp, String message, String label, String info) {
+        this.nodeId = nodeId;
+        this.nodeName = nodeName;
+        this.nodeContainerId = nodeContainerId;
+        this.dockerTimestamp = dockerTimestamp;
+        this.timestamp = timestamp;
         this.message = message;
         this.label = label;
         this.info = info;
@@ -28,19 +32,33 @@ public class LogFormat implements Serializable, Comparable {
     public LogFormat() {
     }
 
-    public String getContainer_id() {
-        return container_id;
+    public String getNodeId() {
+        return nodeId;
     }
 
     @Override
     public int compareTo(@NotNull Object o) {
         LogFormat compareLog = (LogFormat)o;
         // app_timestamp present in both log
-        if (!this.app_timestamp.isBlank() && !compareLog.app_timestamp.isBlank()){
-            return LogOperations.compareAppTimeStamp(this.app_timestamp, compareLog.app_timestamp);
+        if (!this.timestamp.isBlank() && !compareLog.timestamp.isBlank()){
+            return LogOperations.compareAppTimeStamp(this.timestamp, compareLog.timestamp);
         }
         // app_timestamp missing in one log
-       return LogOperations.compareDockerTimeStamp(this.docker_timestamp, compareLog.docker_timestamp);
+       return LogOperations.compareDockerTimeStamp(this.dockerTimestamp, compareLog.dockerTimestamp);
+    }
+
+    @Override
+    public String toString() {
+        return "{" +
+                "node_id='" + nodeId + '\'' +
+                ", node_name='" + nodeName + '\'' +
+                ", node_container_id='" + nodeContainerId + '\'' +
+                ", docker_timestamp='" + dockerTimestamp + '\'' +
+                ", timestamp='" + timestamp + '\'' +
+                ", message='" + message + '\'' +
+                ", label='" + label + '\'' +
+                ", info='" + info + '\'' +
+                '}';
     }
 
     @Override
@@ -48,30 +66,18 @@ public class LogFormat implements Serializable, Comparable {
         if (this == o) return true;
         if (!(o instanceof LogFormat)) return false;
         LogFormat logFormat = (LogFormat) o;
-        return container_id.equals(logFormat.container_id) &&
-                container_name.equals(logFormat.container_name) &&
-                docker_timestamp.equals(logFormat.docker_timestamp) &&
-                app_timestamp.equals(logFormat.app_timestamp) &&
-                message.equals(logFormat.message) &&
-                label.equals(logFormat.label) &&
-                info.equals(logFormat.info);
+        return Objects.equals(nodeId, logFormat.nodeId) &&
+                Objects.equals(nodeName, logFormat.nodeName) &&
+                Objects.equals(nodeContainerId, logFormat.nodeContainerId) &&
+                Objects.equals(dockerTimestamp, logFormat.dockerTimestamp) &&
+                Objects.equals(timestamp, logFormat.timestamp) &&
+                Objects.equals(message, logFormat.message) &&
+                Objects.equals(label, logFormat.label) &&
+                Objects.equals(info, logFormat.info);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(container_id, container_name, docker_timestamp, app_timestamp, message, label, info);
-    }
-
-    @Override
-    public String toString() {
-        return "{" +
-                "container_id='" + container_id + '\'' +
-                ", container_name='" + container_name + '\'' +
-                ", docker_timestamp='" + docker_timestamp + '\'' +
-                ", app_timestamp='" + app_timestamp + '\'' +
-                ", message='" + message + '\'' +
-                ", label='" + label + '\'' +
-                ", info='" + info + '\'' +
-                '}';
+        return Objects.hash(nodeId, nodeName, nodeContainerId, dockerTimestamp, timestamp, message, label, info);
     }
 }

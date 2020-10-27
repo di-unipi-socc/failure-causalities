@@ -1,7 +1,7 @@
 package canalyzer.utilities.pong;
 
 public enum PongState {
-    NAVAIL("not-avilable"),
+    NAVAIL("not-available"),
     RUNNING("running"),
     FAULTED("faulted"),
     STOPPED("stopped");

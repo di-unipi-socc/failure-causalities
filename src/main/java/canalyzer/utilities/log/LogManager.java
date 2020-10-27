@@ -46,8 +46,7 @@ public class LogManager {
      */
     public synchronized boolean setLogFile(@NotNull String logFile) {
         if (!logFile.isBlank()) {
-            String baseDirPath = System.getProperty("user.dir");
-            logFileName = baseDirPath + logFile;
+            logFileName = System.getProperty("user.dir") + logFile;
             return true;
         }
         return false;
@@ -74,13 +73,13 @@ public class LogManager {
 
                     // Check if the key is present, otherwise initializes his log
                     // element ArrayList and insert the first one
-                    ArrayList<LogFormat> tmp = logs.get(elem.getContainer_id());
+                    ArrayList<LogFormat> tmp = logs.get(elem.getNodeId());
                     if (tmp != null) {
                         tmp.add(elem);
                     } else {
                         tmp = new ArrayList<>();
                         tmp.add(elem);
-                        logs.put(elem.getContainer_id(), tmp);
+                        logs.put(elem.getNodeId(), tmp);
                     }
 
                     // Read the next element
