@@ -3,11 +3,21 @@ package canalyzer.algorithm;
 import java.util.ArrayList;
 
 public class CausalityGraph {
-    private ArrayList<WhyEvent> events;
-    private ArrayList<WhyCausality> causalities;
+    private WhyEvent root;
 
-    public CausalityGraph(ArrayList<WhyEvent> events, ArrayList<WhyCausality> causalities) {
-        this.events = events;
-        this.causalities = causalities;
+    public CausalityGraph(WhyEvent root) {
+        this.root = root;
+    }
+
+    public WhyEvent getEventToBeExplained(){
+        return root;
+    }
+
+    private void why(){
+        //richiami l'algoritmo (?)
+    }
+
+    private void printCausalities(){
+        //stampa il grafo delle causalita' (?)
     }
 }
