@@ -36,6 +36,10 @@ public class LogFormat implements Serializable, Comparable {
         return nodeId;
     }
 
+    public String getNodeName() {
+        return nodeName;
+    }
+
     @Override
     public int compareTo(@NotNull Object o) {
         LogFormat compareLog = (LogFormat)o;
