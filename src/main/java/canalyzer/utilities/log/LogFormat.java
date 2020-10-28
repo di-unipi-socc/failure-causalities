@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 // Class which identifies the format of Pong log format
-public class LogFormat implements Serializable, Comparable {
+public class LogFormat implements Serializable, Comparable<Object> {
     private String nodeId;
     private String nodeName;
     private String nodeContainerId;
@@ -38,6 +38,10 @@ public class LogFormat implements Serializable, Comparable {
 
     public String getNodeName() {
         return nodeName;
+    }
+
+    public String getNodeContainerId() {
+        return nodeContainerId;
     }
 
     @Override
