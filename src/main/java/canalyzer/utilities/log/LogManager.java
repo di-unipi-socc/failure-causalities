@@ -54,7 +54,7 @@ public class LogManager {
 
 
     /**
-     * Read from a settled log file and populates private fields
+     * Reads from a settled log file and populates private fields
      * @return ture if no error occurred, false otherwise
      */
     public synchronized boolean readLogFile() {
@@ -100,5 +100,64 @@ public class LogManager {
         return false;
     }
 
+    /**
+     * Returns the logs previously read
+     * @return the private field of the singleton
+     */
+    public synchronized Hashtable<String, ArrayList<LogFormat>> getLogs(){
+        return logs;
+    }
 
+    /**
+     * Returns the list of nodeId whose name is nodeName
+     * @param nodeName name of the node to search inside the logs
+     * @return ArrayList with nodeId
+     */
+    public synchronized ArrayList<String> getNodeIdListByNodeName(String nodeName){
+        ArrayList<String> result = new ArrayList<>();
+        logs.forEach((nodeId, logList) ->{
+            LogFormat tmp = logList.get(0);
+            if (tmp.getNodeName().equals(nodeName)){
+                result.add(nodeId);
+            }
+        });
+        return result;
+    }
+
+    /**
+     * Returns the list of nodeContainerId whose name is nodeName and nodeId is i
+     * @param nodeName name of the node
+     * @param i id of the node
+     * @return ArrayList with nodeContainerId
+     */
+    public synchronized ArrayList<String> getNodeContainerIdByNodeNameNodeId(String nodeName, String i){
+        ArrayList<String> result = new ArrayList<>();
+        logs.forEach((nodeId, logList) -> {
+            LogFormat tmp = logList.get(0);
+            if(tmp.getNodeName().equals(nodeName) && tmp.getNodeId().equals(i)){
+                result.add(tmp.getNodeContainerId());
+            }
+        });
+        return result;
+    }
+
+    /**
+     * Returns the list of log in which j is or nodeId or nodeContainerId
+     * @param j nodeId or nodeContainerId
+     * @return ArrayList with logs
+     */
+    public synchronized ArrayList<LogFormat> getLogsByNodeIdOrNodeContainerId(String j){
+        ArrayList<LogFormat> result = logs.get(j);
+        if(result != null){
+            return result;
+        }
+        ArrayList<LogFormat> finalResult = new ArrayList<>();
+        logs.forEach((nodeId, logList) ->{
+            ArrayList<LogFormat> tmp = new ArrayList<>(logList);
+            tmp.removeIf( el -> el.getNodeContainerId().equals(j));
+            finalResult.addAll(tmp);
+        });
+        Collections.sort(finalResult);
+        return finalResult;
+    }
 }

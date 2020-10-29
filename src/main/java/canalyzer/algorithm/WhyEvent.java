@@ -10,15 +10,15 @@ public class WhyEvent {
     // i -> instance of an event
     private @NotNull String instance;
     // < t , s > -> timestamp and state
-    private ImmutablePair<String, String> tS;
+    private CustomPair<String, String> tS;
     // < t' , s' > -> timestamp and state after event
-    private ImmutablePair<String,String> tSFirst;
+    private CustomPair<String,String> tSFirst;
     //causes
     private ArrayList<WhyEvent> causes;
 
     public WhyEvent(@NotNull String instance,
-                    ImmutablePair<String, String> firstTimeEvent,
-                    ImmutablePair<String, String> secondTimeEvent) {
+                    CustomPair<String, String> firstTimeEvent,
+                    CustomPair<String, String> secondTimeEvent) {
         this.instance = instance;
         this.tS = firstTimeEvent;
         this.tSFirst = secondTimeEvent;
@@ -29,11 +29,11 @@ public class WhyEvent {
         return instance;
     }
 
-    public ImmutablePair<String, String> gettS() {
+    public CustomPair<String, String> gettS() {
         return tS;
     }
 
-    public ImmutablePair<String, String> gettSFirst() {
+    public CustomPair<String, String> gettSFirst() {
         return tSFirst;
     }
 
