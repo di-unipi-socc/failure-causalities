@@ -44,12 +44,20 @@ public class LogFormat implements Serializable, Comparable<Object> {
         return nodeContainerId;
     }
 
+    public String getTimestamp() {
+        return timestamp;
+    }
+
+    public String getInfo() {
+        return info;
+    }
+
     @Override
     public int compareTo(@NotNull Object o) {
         LogFormat compareLog = (LogFormat)o;
         // app_timestamp present in both log
         if (!this.timestamp.isBlank() && !compareLog.timestamp.isBlank()){
-            return LogOperations.compareAppTimeStamp(this.timestamp, compareLog.timestamp);
+            return LogOperations.compareTimestamp(this.timestamp, compareLog.timestamp);
         }
         // app_timestamp missing in one log
        return LogOperations.compareDockerTimeStamp(this.dockerTimestamp, compareLog.dockerTimestamp);
