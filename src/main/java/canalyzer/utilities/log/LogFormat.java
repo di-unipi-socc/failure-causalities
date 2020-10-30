@@ -66,10 +66,10 @@ public class LogFormat implements Serializable, Comparable<Object> {
     @Override
     public String toString() {
         return "{" +
-                "node_id='" + nodeId + '\'' +
-                ", node_name='" + nodeName + '\'' +
-                ", node_container_id='" + nodeContainerId + '\'' +
-                ", docker_timestamp='" + dockerTimestamp + '\'' +
+                "nodeId='" + nodeId + '\'' +
+                ", nodeName='" + nodeName + '\'' +
+                ", nodeContainerId='" + nodeContainerId + '\'' +
+                ", dockerTimestamp='" + dockerTimestamp + '\'' +
                 ", timestamp='" + timestamp + '\'' +
                 ", message='" + message + '\'' +
                 ", label='" + label + '\'' +

@@ -32,4 +32,12 @@ public class CustomPair<L,R> {
         this.left = left;
         this.right = right;
     }
+
+    @Override
+    public String toString() {
+        return "{" +
+                "left=" + left +
+                ", right=" + right +
+                '}';
+    }
 }

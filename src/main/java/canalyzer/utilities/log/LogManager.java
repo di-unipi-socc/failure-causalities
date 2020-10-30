@@ -66,8 +66,7 @@ public class LogManager {
                 reader = new BufferedReader(new FileReader(logFileName));
                 String line = reader.readLine();
                 while (line != null) {
-                    Type typeLogFormat = new TypeToken<LogFormat>() {
-                    }.getType();
+                    Type typeLogFormat = new TypeToken<LogFormat>() {}.getType();
                     // Read each element from log file
                     LogFormat elem = gson.fromJson(line, typeLogFormat);
 
@@ -87,9 +86,7 @@ public class LogManager {
                 }
 
                 // For each element inside the Hashtable sort his list of LogFormat
-                logs.forEach((node_id , nodeLogs) -> {
-                    Collections.sort(nodeLogs);
-                });
+                logs.forEach((node_id , nodeLogs) -> Collections.sort(nodeLogs));
                 return true;
             } catch (IOException e) {
                 e.printStackTrace();
