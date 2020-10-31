@@ -49,7 +49,7 @@ public class WhyAlgorithm {
                 events.add(tmp);
 
                 //Can the event also be caused by a fault handler?
-                Node N = A.getNodes().get(logs.get(i).get(0).getNodeName());
+                Node N = A.getNodes().get(logs.get(tmp.getInstance()).get(0).getNodeName());
                 String x = tmp.getTS().getRight();
                 String xf = tmp.getTSFirst().getRight();
                 if (checkFaultHandler(N.getManagementProtocol().getPhi(), x, xf)) {
