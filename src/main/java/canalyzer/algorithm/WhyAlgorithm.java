@@ -5,7 +5,7 @@ import canalyzer.algorithm.eventType.ThunderboltEvent;
 import canalyzer.algorithm.eventType.WhyEvent;
 import canalyzer.utilities.log.LogFormat;
 import canalyzer.utilities.log.LogManager;
-import canalyzer.utilities.log.LogOperations;
+import canalyzer.utilities.log.LogOp;
 import model.Application;
 import model.Node;
 import model.Requirement;
@@ -29,7 +29,8 @@ public class WhyAlgorithm {
                                CustomPair<String, String> ts,
                                CustomPair<String, String> tSFirst,
                                Hashtable<String, ArrayList<LogFormat>> logs,
-                               Application A) {
+                               Application A,
+                                Double logOffset) {
 
         // Initializing causality graph
         String nodeName = logs.get(i).get(0).getNodeName();
@@ -72,19 +73,19 @@ public class WhyAlgorithm {
                         for (String j : causingInstances) {
                             ArrayList<LogFormat> jLog = LogManager.getInstance().getLogsByNodeIdOrNodeContainerId(j);
                             String jNodeName = jLog.get(0).getNodeName();
-                            CustomPair<String, String> uy = previous(tmp.getTS().getLeft(), jLog);
-                            CustomPair<String, String> uyFirst = previous(tmp.getTSFirst().getLeft(), jLog);
-                            while (LogOperations.compareTimestamp(uyFirst.getLeft(), uy.getLeft()) >= 0 &&
+                            CustomPair<String, String> uy = previous(tmp.getTS().getLeft(), jLog, logOffset );
+                            CustomPair<String, String> uyFirst = previous(tmp.getTSFirst().getLeft(), jLog, 0.0);
+                            while (LogOp.compareTs( uyFirst.getLeft(),uy.getLeft()) >= 0 &&
                                     checkIfBelongsTo(r, N.getName(), M, uyFirst.getRight(), A)) {
-                                uyFirst = previous(uyFirst.getLeft(), jLog);
+                                uyFirst = previous(uyFirst.getLeft(), jLog, 0.0);
                             }
                             CustomPair<String, String> vW = new CustomPair<>();
-                            while (LogOperations.compareTimestamp(uyFirst.getLeft(), uy.getLeft()) >= 0 &&
+                            while (LogOp.compareTs(uyFirst.getLeft(), uy.getLeft()) >= 0 &&
                                     !checkIfBelongsTo(r, N.getName(), M, uyFirst.getRight(), A)) {
                                 vW.setAll(uyFirst.getLeft(), uyFirst.getRight());
-                                uyFirst = previous(uyFirst.getLeft(), jLog);
+                                uyFirst = previous(uyFirst.getLeft(), jLog, 0.0);
                             }
-                            if (LogOperations.compareTimestamp(uyFirst.getLeft(), uy.getLeft()) >= 0) {
+                            if (LogOp.compareTs(uyFirst.getLeft(),uy.getLeft()) >= 0) {
                                 WhyEvent c = new CausesEvent(j, jNodeName, uyFirst, vW);
                                 if (!events.contains(c)) {
                                     toBeExplained.add(c);
@@ -131,18 +132,19 @@ public class WhyAlgorithm {
     }
 
     /**
-     * Returns the first element with the timestamp less than t if present, empty otherwise
+     * Returns the first element with the timestamp less than t-offset if present, empty otherwise
      *
      * @param t    timestamp reference
      * @param logs Arraylist with logs to examine
-     * @return CustomPair contains the first element with the timestamp less than t or an empty one
+     * @param logOffset offset to subtract from t
+     * @return CustomPair contains the first element with the timestamp less than t-logOffset or an empty one
      */
-    private static CustomPair<String, String> previous(String t, ArrayList<LogFormat> logs) {
+    private static CustomPair<String, String> previous(String t, ArrayList<LogFormat> logs, Double logOffset) {
         ListIterator<LogFormat> iterator = logs.listIterator(logs.size());
-
+        double tD = Double.parseDouble(t) - logOffset;
         while (iterator.hasPrevious()) {
             LogFormat tmp = iterator.previous();
-            if (LogOperations.compareTimestamp(t, tmp.getTimestamp()) > 0) {
+            if (LogOp.compareTs(Double.toString(tD), tmp.getTimestamp()) > 0) {
                 return new CustomPair<>(tmp.getTimestamp(), tmp.getInfo());
             }
         }
