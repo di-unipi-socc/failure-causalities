@@ -2,7 +2,9 @@
 *.class
 
 # Log file
-*.log
+out/**/*.log
+src/**/*.log
+target/**/*.log
 
 # BlueJ files
 *.ctxt
