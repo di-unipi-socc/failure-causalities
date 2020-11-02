@@ -4,7 +4,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.time.Instant;
 
-public class LogOperations {
+public class LogOp {
 
     /**
      * Compare two apps timestamps
@@ -13,7 +13,7 @@ public class LogOperations {
      * @return return 0 if the two argument are equals, returns less than 0 if the first is
      * numerically less than second or if is empty, otherwise return grater than 0
      */
-    public static int compareTimestamp(@NotNull String app1, @NotNull String app2){
+    public static int compareTs(@NotNull String app1, @NotNull String app2){
         if(app1.isBlank() && app2.isBlank()) {
             return 0;
         }
@@ -28,6 +28,7 @@ public class LogOperations {
             Double comparedTs = Double.parseDouble(app2);
             return appTs.compareTo(comparedTs);
         }
+//        return Double.compare(app1, app2);
     }
 
     /**
@@ -37,7 +38,7 @@ public class LogOperations {
      * @return return 0 if the two arguments are equals, returns less than 0 if the first is
      *      * numerically less than second or if is empty, otherwise return grater than 0
      */
-    public static int compareDockerTimeStamp(@NotNull String app1, @NotNull String app2){
+    public static int compareDTs(@NotNull String app1, @NotNull String app2){
         if(app1.isBlank() && app2.isBlank()) {
             return 0;
         }
