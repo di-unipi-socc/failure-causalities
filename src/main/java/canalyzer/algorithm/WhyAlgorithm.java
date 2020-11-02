@@ -72,17 +72,17 @@ public class WhyAlgorithm {
                         for (String j : causingInstances) {
                             ArrayList<LogFormat> jLog = LogManager.getInstance().getLogsByNodeIdOrNodeContainerId(j);
                             String jNodeName = jLog.get(0).getNodeName();
-                            CustomPair<String, String> uy = previous(tmp.getTS().getLeft(), jLog, false);
-                            CustomPair<String, String> uyFirst = previous(tmp.getTSFirst().getLeft(), jLog, false);
+                            CustomPair<String, String> uy = previous(tmp.getTS().getLeft(), jLog);
+                            CustomPair<String, String> uyFirst = previous(tmp.getTSFirst().getLeft(), jLog);
                             while (LogOperations.compareTimestamp(uyFirst.getLeft(), uy.getLeft()) >= 0 &&
                                     checkIfBelongsTo(r, N.getName(), M, uyFirst.getRight(), A)) {
-                                uyFirst = previous(uyFirst.getLeft(), jLog, true);
+                                uyFirst = previous(uyFirst.getLeft(), jLog);
                             }
                             CustomPair<String, String> vW = new CustomPair<>();
                             while (LogOperations.compareTimestamp(uyFirst.getLeft(), uy.getLeft()) >= 0 &&
                                     !checkIfBelongsTo(r, N.getName(), M, uyFirst.getRight(), A)) {
                                 vW.setAll(uyFirst.getLeft(), uyFirst.getRight());
-                                uyFirst = previous(uyFirst.getLeft(), jLog, true);
+                                uyFirst = previous(uyFirst.getLeft(), jLog);
                             }
                             if (LogOperations.compareTimestamp(uyFirst.getLeft(), uy.getLeft()) >= 0) {
                                 WhyEvent c = new CausesEvent(j, jNodeName, uyFirst, vW);
@@ -137,15 +137,12 @@ public class WhyAlgorithm {
      * @param logs Arraylist with logs to examine
      * @return CustomPair contains the first element with the timestamp less than t or an empty one
      */
-    private static CustomPair<String, String> previous(String t, ArrayList<LogFormat> logs, boolean cut) {
+    private static CustomPair<String, String> previous(String t, ArrayList<LogFormat> logs) {
         ListIterator<LogFormat> iterator = logs.listIterator(logs.size());
 
         while (iterator.hasPrevious()) {
             LogFormat tmp = iterator.previous();
-            if (LogOperations.compareTimestamp(t, tmp.getTimestamp()) >= 0) {
-                if (cut) {
-                    logs.subList(logs.indexOf(tmp), logs.size()).clear();
-                }
+            if (LogOperations.compareTimestamp(t, tmp.getTimestamp()) > 0) {
                 return new CustomPair<>(tmp.getTimestamp(), tmp.getInfo());
             }
         }
