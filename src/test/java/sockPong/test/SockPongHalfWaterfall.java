@@ -27,7 +27,7 @@ public class SockPongHalfWaterfall {
         String i = "65bc64b5091e185c86a3b695990d4b13a75fa47932cc2fc5631acafd6c166f25";
         Hashtable<String, ArrayList<LogFormat>> logs = LogManager.getInstance().getLogs();
 
-        WhyEvent p =  WhyAlgorithm.why(i, ts, tsFirst, logs, app, 3.0);
+        WhyEvent p =  WhyAlgorithm.why(i, ts, tsFirst, logs, app);
         Gson gson = new Gson();
         String printable = gson.toJson(p);
         System.out.println(printable);

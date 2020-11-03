@@ -29,8 +29,7 @@ public class WhyAlgorithm {
                                CustomPair<String, String> ts,
                                CustomPair<String, String> tSFirst,
                                Hashtable<String, ArrayList<LogFormat>> logs,
-                               Application A,
-                                Double logOffset) {
+                               Application A) {
 
         // Initializing causality graph
         String nodeName = logs.get(i).get(0).getNodeName();
@@ -54,7 +53,15 @@ public class WhyAlgorithm {
                 String x = tmp.getTS().getRight();
                 String xf = tmp.getTSFirst().getRight();
                 if (checkFaultHandler(N.getManagementProtocol().getPhi(), x, xf)) {
-                    // If yes, explain each possibly faulted requirement
+                    // If yes,isolate starting time for state x and...
+                    CustomPair<String, String> txSecond = new CustomPair<>(tmp.getTS().getLeft(), tmp.getTS().getRight());
+                    String tStart = txSecond.getLeft();
+                    ArrayList<LogFormat> iLogs = LogManager.getInstance().getLogsByNodeIdOrNodeContainerId(i);
+                    while (txSecond.getRight().equals(tmp.getTS().getRight()) && previousInLogs(previous(txSecond.getLeft(), iLogs), iLogs)) {
+                        tStart = txSecond.getLeft();
+                        txSecond = previous(txSecond.getLeft(), iLogs);
+                    }
+                    //...explain each possibily faulted requirement
                     List<Requirement> pFaultedRequirements = possiblyFaultedRequirements(
                             N.getManagementProtocol().getRho().get(x),
                             N.getManagementProtocol().getRho().get(xf)
@@ -72,27 +79,30 @@ public class WhyAlgorithm {
                         }
                         for (String j : causingInstances) {
                             ArrayList<LogFormat> jLog = LogManager.getInstance().getLogsByNodeIdOrNodeContainerId(j);
-                            String jNodeName = jLog.get(0).getNodeName();
-                            CustomPair<String, String> uy = previous(tmp.getTS().getLeft(), jLog, logOffset );
-                            CustomPair<String, String> uyFirst = previous(tmp.getTSFirst().getLeft(), jLog, 0.0);
-                            while (LogOp.compareTs( uyFirst.getLeft(),uy.getLeft()) >= 0 &&
-                                    checkIfBelongsTo(r, N.getName(), M, uyFirst.getRight(), A)) {
-                                uyFirst = previous(uyFirst.getLeft(), jLog, 0.0);
-                            }
-                            CustomPair<String, String> vW = new CustomPair<>();
-                            while (LogOp.compareTs(uyFirst.getLeft(), uy.getLeft()) >= 0 &&
-                                    !checkIfBelongsTo(r, N.getName(), M, uyFirst.getRight(), A)) {
-                                vW.setAll(uyFirst.getLeft(), uyFirst.getRight());
-                                uyFirst = previous(uyFirst.getLeft(), jLog, 0.0);
-                            }
-                            if (LogOp.compareTs(uyFirst.getLeft(),uy.getLeft()) >= 0) {
-                                WhyEvent c = new CausesEvent(j, jNodeName, uyFirst, vW);
-                                if (!events.contains(c)) {
-                                    toBeExplained.add(c);
+                            if (previousInLogs(previous(tStart, jLog), jLog)){
+                                String jNodeName = jLog.get(0).getNodeName();
+                                CustomPair<String, String> uy = previous(tStart, jLog);
+                                CustomPair<String, String> uyFirst = previous(tmp.getTSFirst().getLeft(), jLog);
+                                while (LogOp.compareTs(uyFirst.getLeft(), uy.getLeft()) >= 0 &&
+                                        checkIfBelongsTo(r, N.getName(), M, uyFirst.getRight(), A)) {
+                                    uyFirst = previous(uyFirst.getLeft(), jLog);
                                 }
-                                events.add(c);
-                                tmp.addCause(c);
+                                CustomPair<String, String> vW = new CustomPair<>();
+                                while (LogOp.compareTs(uyFirst.getLeft(), uy.getLeft()) >= 0 &&
+                                        !checkIfBelongsTo(r, N.getName(), M, uyFirst.getRight(), A)) {
+                                    vW.setAll(uyFirst.getLeft(), uyFirst.getRight());
+                                    uyFirst = previous(uyFirst.getLeft(), jLog);
+                                }
+                                if (LogOp.compareTs(uyFirst.getLeft(), uy.getLeft()) >= 0) {
+                                    WhyEvent c = new CausesEvent(j, jNodeName, uyFirst, vW);
+                                    if (!events.contains(c)) {
+                                        toBeExplained.add(c);
+                                    }
+                                    events.add(c);
+                                    tmp.addCause(c);
+                                }
                             }
+
                         }
                     }
                 }
@@ -105,6 +115,7 @@ public class WhyAlgorithm {
 
     /**
      * Return true if <x,x'> is in the phi of N
+     *
      * @param phi phi of N
      * @param x   first state
      * @param xF  second state
@@ -132,16 +143,15 @@ public class WhyAlgorithm {
     }
 
     /**
-     * Returns the first element with the timestamp less than t-offset if present, empty otherwise
+     * Returns the first element with the timestamp less than t if present, empty otherwise
      *
      * @param t    timestamp reference
      * @param logs Arraylist with logs to examine
-     * @param logOffset offset to subtract from t
-     * @return CustomPair contains the first element with the timestamp less than t-logOffset or an empty one
+     * @return CustomPair contains the first element with the timestamp less than t or an empty one
      */
-    private static CustomPair<String, String> previous(String t, ArrayList<LogFormat> logs, Double logOffset) {
+    private static CustomPair<String, String> previous(String t, ArrayList<LogFormat> logs) {
         ListIterator<LogFormat> iterator = logs.listIterator(logs.size());
-        double tD = Double.parseDouble(t) - logOffset;
+        double tD = Double.parseDouble(t);
         while (iterator.hasPrevious()) {
             LogFormat tmp = iterator.previous();
             if (LogOp.compareTs(Double.toString(tD), tmp.getTimestamp()) > 0) {
@@ -149,6 +159,22 @@ public class WhyAlgorithm {
             }
         }
         return new CustomPair<>("", "");
+    }
+
+    /**
+     * Return true if the elements inside pair is in the array
+     *
+     * @param pair pair containing timestamp and info of one LogFormat
+     * @param logs arrayList with log
+     * @return true if pair inside logs, false otherwise
+     */
+    private static boolean previousInLogs(CustomPair<String, String> pair, ArrayList<LogFormat> logs) {
+        for (LogFormat logElement : logs) {
+            if (LogOp.compareTs(logElement.getTimestamp(), pair.getLeft()) == 0 && logElement.getInfo().equals(pair.getRight())) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**

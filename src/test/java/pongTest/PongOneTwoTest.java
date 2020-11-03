@@ -28,7 +28,7 @@ public class PongOneTwoTest {
         String i = "71f72cf542c2accf04fc7fde9053369032c151e7f0f32a5c72450025aed552c4";
         Hashtable<String, ArrayList<LogFormat>> logs = LogManager.getInstance().getLogs();
 
-        WhyEvent p =  WhyAlgorithm.why(i, ts, tsFirst, logs, app, 3.0);
+        WhyEvent p =  WhyAlgorithm.why(i, ts, tsFirst, logs, app);
         Gson gson = new Gson();
         String printable = gson.toJson(p);
         System.out.println(printable);

@@ -29,7 +29,7 @@ public class SockPongIsolatedTest {
         String i = "60f73667527906bb4380b1f4cf77ffb9d068747ac1cc95836a172f69f39efc0a";
         Hashtable<String, ArrayList<LogFormat>> logs = LogManager.getInstance().getLogs();
 
-        WhyEvent p =  WhyAlgorithm.why(i, ts, tsFirst, logs, app, 3.0);
+        WhyEvent p =  WhyAlgorithm.why(i, ts, tsFirst, logs, app);
         Gson gson = new Gson();
         String printable = gson.toJson(p);
         System.out.println(printable);

@@ -27,7 +27,7 @@ public class PongWaterfallTest {
         String i = "a064e1b0cbc7e4cbe9cb59765acb84110a13e200dc16290fe29ea53996e2ddec";
         Hashtable<String, ArrayList<LogFormat>> logs = LogManager.getInstance().getLogs();
 
-        WhyEvent p =  WhyAlgorithm.why(i, ts, tsFirst, logs, app, 3.0);
+        WhyEvent p =  WhyAlgorithm.why(i, ts, tsFirst, logs, app);
         Gson gson = new Gson();
         String printable = gson.toJson(p);
         System.out.println(printable);
