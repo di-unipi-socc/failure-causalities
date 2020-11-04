@@ -1,4 +1,4 @@
-package sockPong.test;
+package sockPong.test.classicTest;
 
 import canalyzer.algorithm.CustomPair;
 import canalyzer.algorithm.WhyAlgorithm;

@@ -1,4 +1,4 @@
-package sockPong.test;
+package sockPong.test.classicTest;
 
 public enum LogFiles {
     ISOLATED_FAULT("/data/examples/sockPongLog/isolatedFault.log"),

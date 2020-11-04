@@ -1,4 +1,4 @@
-package sockPong.test;
+package sockPong.test.classicTest;
 
 import canalyzer.algorithm.CustomPair;
 import canalyzer.algorithm.WhyAlgorithm;
@@ -12,27 +12,26 @@ import sockPong.topology.SockPongTopology;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
-public class SockPongIsolatedTest {
+public class SockPongOneTwo {
     public static void main(String[] args) {
 
         //Create LogManager
         LogManager lm = LogManager.getInstance();
-        lm.setLogFile(LogFiles.ISOLATED_FAULT.toString());
+        lm.setLogFile(LogFiles.ONE_TWO.toString());
         lm.readLogFile();
 
         //Creates topology of 21/10/2020
         Application app = SockPongTopology.sockPongTopology();
 
         // Initializing Why parameter
-        CustomPair<String,String> ts = new CustomPair<>("1604239007.3137524", "running");
-        CustomPair<String,String> tsFirst = new CustomPair<>("1604239008.8466222", "stop");
-        String i = "60f73667527906bb4380b1f4cf77ffb9d068747ac1cc95836a172f69f39efc0a";
+        CustomPair<String,String> ts = new CustomPair<>("1604398052.6015098", "running");
+        CustomPair<String,String> tsFirst = new CustomPair<>("1604398053.60538", "faulted");
+        String i = "58d1d74ecf206e59faee3f15347722c4bf7d9f00b4a074ea49beb8eb0691dbde";
         Hashtable<String, ArrayList<LogFormat>> logs = LogManager.getInstance().getLogs();
 
         WhyEvent p =  WhyAlgorithm.why(i, ts, tsFirst, logs, app);
         Gson gson = new Gson();
         String printable = gson.toJson(p);
         System.out.println(printable);
-
     }
 }

@@ -1,4 +1,4 @@
-package sockPong.test;
+package sockPong.test.classicTest;
 
 import canalyzer.algorithm.CustomPair;
 import canalyzer.algorithm.WhyAlgorithm;
@@ -12,19 +12,21 @@ import sockPong.topology.SockPongTopology;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
-public class SockPongWaterfallTest {
+public class SockPongTwoComponent {
     public static void main(String[] args) {
+
         //Create LogManager
         LogManager lm = LogManager.getInstance();
-        lm.setLogFile(LogFiles.WATERFALL_FAULT.toString());
+        lm.setLogFile(LogFiles.TWO_COMPONENT_WATERFALL.toString());
         lm.readLogFile();
 
+        //Creates topology of 21/10/2020
         Application app = SockPongTopology.sockPongTopology();
 
         // Initializing Why parameter
-        CustomPair<String,String> ts = new CustomPair<>("1604252057.7335348", "running");
-        CustomPair<String,String> tsFirst = new CustomPair<>("1604252061.741119", "faulted");
-        String i = "42c671b904f25f45fef793becfc2f16cdf3b9430727922f5b7401d8f43d32d28";
+        CustomPair<String,String> ts = new CustomPair<>("1604400280.0690422", "running");
+        CustomPair<String,String> tsFirst = new CustomPair<>("1604400281.0757217", "faulted");
+        String i = "ef4909a24d82d40b72e16edc586a48a926635220f2a274c09f9d28e4e5eb570d";
         Hashtable<String, ArrayList<LogFormat>> logs = LogManager.getInstance().getLogs();
 
         WhyEvent p =  WhyAlgorithm.why(i, ts, tsFirst, logs, app);
