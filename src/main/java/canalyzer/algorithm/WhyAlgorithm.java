@@ -39,6 +39,7 @@ public class WhyAlgorithm {
         //Explain events
         ArrayList<WhyEvent> toBeExplained = new ArrayList<>(Collections.singletonList(result));
         while (!toBeExplained.isEmpty()) {
+            //tmp is the first element in the list to be explained
             CausesEvent tmp = (CausesEvent) toBeExplained.remove(0);
 
             //Check if event is "truly" to be explained
@@ -52,8 +53,10 @@ public class WhyAlgorithm {
                 Node N = A.getNodes().get(logs.get(tmp.getInstance()).get(0).getNodeName());
                 String x = tmp.getTS().getRight();
                 String xf = tmp.getTSFirst().getRight();
+                // Check if the pair <x,x'> is in the fault handler of N
                 if (checkFaultHandler(N.getManagementProtocol().getPhi(), x, xf)) {
                     // If yes,isolate starting time for state x and...
+                    // txSecond is equivalent to <t'',x''> in theoretical Why algorithm
                     CustomPair<String, String> txSecond = new CustomPair<>(tmp.getTS().getLeft(), tmp.getTS().getRight());
                     String tStart = txSecond.getLeft();
                     ArrayList<LogFormat> iLogs = LogManager.getInstance().getLogsByNodeIdOrNodeContainerId(i);
@@ -61,7 +64,7 @@ public class WhyAlgorithm {
                         tStart = txSecond.getLeft();
                         txSecond = previous(txSecond.getLeft(), iLogs);
                     }
-                    //...explain each possibily faulted requirement
+                    //...explain each possibly faulted requirement
                     List<Requirement> pFaultedRequirements = possiblyFaultedRequirements(
                             N.getManagementProtocol().getRho().get(x),
                             N.getManagementProtocol().getRho().get(xf)
@@ -81,7 +84,9 @@ public class WhyAlgorithm {
                             ArrayList<LogFormat> jLog = LogManager.getInstance().getLogsByNodeIdOrNodeContainerId(j);
                             if (previousInLogs(previous(tStart, jLog), jLog)){
                                 String jNodeName = jLog.get(0).getNodeName();
+                                // uy is equivalent to <u,y> of Why theoretical algorithm
                                 CustomPair<String, String> uy = previous(tStart, jLog);
+                                // uyFirst is equivalent to <u',y'> of Why theoretical algorithm
                                 CustomPair<String, String> uyFirst = previous(tmp.getTSFirst().getLeft(), jLog);
                                 while (LogOp.compareTs(uyFirst.getLeft(), uy.getLeft()) >= 0 &&
                                         checkIfBelongsTo(r, N.getName(), M, uyFirst.getRight(), A)) {
