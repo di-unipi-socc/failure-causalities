@@ -8,11 +8,11 @@ services:
         ports: 
             - "5000:5000"
         volumes: 
-            - $PWD/pongFiles/src:/pongFiles/src
+            - $PWD/../../../pongFiles/src:/pongFiles/src
         environment:
             - NAME=Edge_Router
             - LINKING=Frontend_Software
-        logging: 
+        logging:
             driver: gelf
             options:
                 gelf-address: udp://localhost:9600
@@ -27,8 +27,8 @@ services:
         build: .
         ports: 
             - "5001:5000"
-        volumes: 
-            - $PWD/pongFiles/src:/pongFiles/src
+        volumes:
+            - $PWD/../../../pongFiles/src:/pongFiles/src
         environment:
             - NAME=Frontend_Software
             - LINKING=Catalogue_Software,Users_Software,Carts_Software,Orders_Software
@@ -50,8 +50,8 @@ services:
         build: .
         ports: 
             - "5002:5000"
-        volumes: 
-            - $PWD/pongFiles/src:/pongFiles/src
+        volumes:
+            - $PWD/../../../pongFiles/src:/pongFiles/src
         environment:
             - NAME=Catalogue_Software
             - LINKING=Catalogue_DB_Container
@@ -70,8 +70,8 @@ services:
         build: .
         ports: 
             - "5003:5000"
-        volumes: 
-            - $PWD/pongFiles/src:/pongFiles/src
+        volumes:
+            - $PWD/../../../pongFiles/src:/pongFiles/src
         environment:
             - NAME=Orders_Software
             - LINKING=Users_Software,Carts_Software,Payment_Software,Shipping_Software,Orders_DB_Container
@@ -94,11 +94,11 @@ services:
         build: .
         ports: 
             - "5004:5000"
-        volumes: 
-            - $PWD/pongFiles/src:/pongFiles/src
+        volumes:
+            - $PWD/../../../pongFiles/src:/pongFiles/src
         environment:
             - NAME=Catalogue_DB_Container
-        logging: 
+        logging:
             driver: gelf
             options:
                 gelf-address: udp://localhost:9600
@@ -113,8 +113,8 @@ services:
         build: .
         ports: 
             - "5005:5000"
-        volumes: 
-            - $PWD/pongFiles/src:/pongFiles/src
+        volumes:
+            - $PWD/../../../pongFiles/src:/pongFiles/src
         environment:
             - NAME=Orders_DB_Container
         logging: 
@@ -132,8 +132,8 @@ services:
         build: .
         ports: 
             - "5006:5000"
-        volumes: 
-            - $PWD/pongFiles/src:/pongFiles/src
+        volumes:
+            - $PWD/../../../pongFiles/src:/pongFiles/src
         environment:
             - NAME=Users_Software
             - LINKING=Users_DB_Container
@@ -152,8 +152,8 @@ services:
         build: .
         ports: 
             - "5007:5000"
-        volumes: 
-            - $PWD/pongFiles/src:/pongFiles/src
+        volumes:
+            - $PWD/../../../pongFiles/src:/pongFiles/src
         environment:
             - NAME=Carts_Software
             - LINKING=Carts_DB_Container
@@ -172,8 +172,8 @@ services:
         build: .
         ports: 
             - "5008:5000"
-        volumes: 
-            - $PWD/pongFiles/src:/pongFiles/src
+        volumes:
+            - $PWD/../../../pongFiles/src:/pongFiles/src
         environment:
             - NAME=Payment_Software
         logging: 
@@ -191,8 +191,8 @@ services:
         build: .
         ports: 
             - "5009:5000"
-        volumes: 
-            - $PWD/pongFiles/src:/pongFiles/src
+        volumes:
+            - $PWD/../../../pongFiles/src:/pongFiles/src
         environment:
             - NAME=Shipping_Software
             - LINKING=RabbitMQ_Container
@@ -211,8 +211,8 @@ services:
         build: .
         ports: 
             - "5010:5000"
-        volumes: 
-            - $PWD/pongFiles/src:/pongFiles/src
+        volumes:
+            - $PWD/../../../pongFiles/src:/pongFiles/src
         environment:
             - NAME=Queue_Master_Container
             - LINKING=RabbitMQ_Container
@@ -231,8 +231,8 @@ services:
         build: .
         ports: 
             - "5011:5000"
-        volumes: 
-            - $PWD/pongFiles/src:/pongFiles/src
+        volumes:
+            - $PWD/../../../pongFiles/src:/pongFiles/src
         environment:
             - NAME=Users_DB_Container
         logging: 
@@ -250,8 +250,8 @@ services:
         build: .
         ports: 
             - "5012:5000"
-        volumes: 
-            - $PWD/pongFiles/src:/pongFiles/src
+        volumes:
+            - $PWD/../../../pongFiles/src:/pongFiles/src
         environment:
             - NAME=Carts_DB_Container
         logging: 
@@ -269,8 +269,8 @@ services:
         build: .
         ports: 
             - "5013:5000"
-        volumes: 
-            - $PWD/pongFiles/src:/pongFiles/src
+        volumes:
+            - $PWD/../../../pongFiles/src:/pongFiles/src
         environment:
             - NAME=RabbitMQ_Container
         logging: 
