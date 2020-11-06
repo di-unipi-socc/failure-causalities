@@ -1,0 +1,313 @@
+version: "3.8"
+
+services: 
+    edge_router:
+        working_dir: /pongFiles
+        container_name: Edge_Router
+        build: .
+        ports: 
+            - "5000:5000"
+        volumes: 
+            - $PWD/pongFiles/src:/pongFiles/src
+        environment:
+            - NAME=Edge_Router
+            - LINKING=Frontend_Software
+        logging: 
+            driver: gelf
+            options:
+                gelf-address: udp://localhost:9600
+                tag: faultApp
+        depends_on:
+            - logstash
+            - frontend_software
+            
+    frontend_software:
+        working_dir: /pongFiles
+        container_name: Frontend_Software
+        build: .
+        ports: 
+            - "5001:5000"
+        volumes: 
+            - $PWD/pongFiles/src:/pongFiles/src
+        environment:
+            - NAME=Frontend_Software
+            - LINKING=Catalogue_Software,Users_Software,Carts_Software,Orders_Software
+        logging: 
+            driver: gelf
+            options:
+                gelf-address: udp://localhost:9600
+                tag: faultApp
+        depends_on:
+            - logstash
+            - catalogue_software
+            - users_software
+            - carts_software
+            - orders_software
+
+    catalogue_software:
+        working_dir: /pongFiles
+        container_name: Catalogue_Software
+        build: .
+        ports: 
+            - "5002:5000"
+        volumes: 
+            - $PWD/pongFiles/src:/pongFiles/src
+        environment:
+            - NAME=Catalogue_Software
+            - LINKING=Catalogue_DB_Container
+        logging: 
+            driver: gelf
+            options:
+                gelf-address: udp://localhost:9600
+                tag: faultApp
+        depends_on:
+            - logstash
+            - catalogue_db_container
+   
+    orders_software:
+        working_dir: /pongFiles
+        container_name: Orders_Software
+        build: .
+        ports: 
+            - "5003:5000"
+        volumes: 
+            - $PWD/pongFiles/src:/pongFiles/src
+        environment:
+            - NAME=Orders_Software
+            - LINKING=Users_Software,Carts_Software,Payment_Software,Shipping_Software,Orders_DB_Container
+        logging: 
+            driver: gelf
+            options:
+                gelf-address: udp://localhost:9600
+                tag: faultApp
+        depends_on:
+            - logstash
+            - orders_db_container
+            - users_software
+            - carts_software
+            - payment_software
+            - shipping_software   
+            
+    catalogue_db_container:
+        working_dir: /pongFiles
+        container_name: Catalogue_DB_Container
+        build: .
+        ports: 
+            - "5004:5000"
+        volumes: 
+            - $PWD/pongFiles/src:/pongFiles/src
+        environment:
+            - NAME=Catalogue_DB_Container
+        logging: 
+            driver: gelf
+            options:
+                gelf-address: udp://localhost:9600
+                tag: faultApp
+        depends_on:
+            logstash:
+                condition: service_healthy
+    
+    orders_db_container:
+        working_dir: /pongFiles
+        container_name: Orders_DB_Container
+        build: .
+        ports: 
+            - "5005:5000"
+        volumes: 
+            - $PWD/pongFiles/src:/pongFiles/src
+        environment:
+            - NAME=Orders_DB_Container
+        logging: 
+            driver: gelf
+            options:
+                gelf-address: udp://localhost:9600
+                tag: faultApp
+        depends_on:
+            logstash:
+                condition: service_healthy
+     
+    users_software:
+        working_dir: /pongFiles
+        container_name: Users_Software
+        build: .
+        ports: 
+            - "5006:5000"
+        volumes: 
+            - $PWD/pongFiles/src:/pongFiles/src
+        environment:
+            - NAME=Users_Software
+            - LINKING=Users_DB_Container
+        logging: 
+            driver: gelf
+            options:
+                gelf-address: udp://localhost:9600
+                tag: faultApp
+        depends_on:
+            - logstash
+            - users_db_container
+
+    carts_software:
+        working_dir: /pongFiles
+        container_name: Carts_Software
+        build: .
+        ports: 
+            - "5007:5000"
+        volumes: 
+            - $PWD/pongFiles/src:/pongFiles/src
+        environment:
+            - NAME=Carts_Software
+            - LINKING=Carts_DB_Container
+        logging: 
+            driver: gelf
+            options:
+                gelf-address: udp://localhost:9600
+                tag: faultApp
+        depends_on:
+            - logstash
+            - carts_db_container
+
+    payment_software:
+        working_dir: /pongFiles
+        container_name: Payment_Software
+        build: .
+        ports: 
+            - "5008:5000"
+        volumes: 
+            - $PWD/pongFiles/src:/pongFiles/src
+        environment:
+            - NAME=Payment_Software
+        logging: 
+            driver: gelf
+            options:
+                gelf-address: udp://localhost:9600
+                tag: faultApp
+        depends_on:
+            logstash:
+                condition: service_healthy
+
+    shipping_software:
+        working_dir: /pongFiles
+        container_name: Shipping_Software
+        build: .
+        ports: 
+            - "5009:5000"
+        volumes: 
+            - $PWD/pongFiles/src:/pongFiles/src
+        environment:
+            - NAME=Shipping_Software
+            - LINKING=RabbitMQ_Container
+        logging: 
+            driver: gelf
+            options:
+                gelf-address: udp://localhost:9600
+                tag: faultApp
+        depends_on:
+            - logstash
+            - rabbitmq_container
+
+    queue_master_container:
+        working_dir: /pongFiles
+        container_name: Queue_Master_Container
+        build: .
+        ports: 
+            - "5010:5000"
+        volumes: 
+            - $PWD/pongFiles/src:/pongFiles/src
+        environment:
+            - NAME=Queue_Master_Container
+            - LINKING=RabbitMQ_Container
+        logging: 
+            driver: gelf
+            options:
+                gelf-address: udp://localhost:9600
+                tag: faultApp
+        depends_on:
+            - logstash
+            - rabbitmq_container
+         
+    users_db_container:
+        working_dir: /pongFiles
+        container_name: Users_DB_Container
+        build: .
+        ports: 
+            - "5011:5000"
+        volumes: 
+            - $PWD/pongFiles/src:/pongFiles/src
+        environment:
+            - NAME=Users_DB_Container
+        logging: 
+            driver: gelf
+            options:
+                gelf-address: udp://localhost:9600
+                tag: faultApp
+        depends_on:
+            logstash:
+                condition: service_healthy 
+     
+    carts_db_container:
+        working_dir: /pongFiles
+        container_name: Carts_DB_Container
+        build: .
+        ports: 
+            - "5012:5000"
+        volumes: 
+            - $PWD/pongFiles/src:/pongFiles/src
+        environment:
+            - NAME=Carts_DB_Container
+        logging: 
+            driver: gelf
+            options:
+                gelf-address: udp://localhost:9600
+                tag: faultApp
+        depends_on:
+            logstash:
+                condition: service_healthy                
+
+    rabbitmq_container:
+        working_dir: /pongFiles
+        container_name: RabbitMQ_Container
+        build: .
+        ports: 
+            - "5013:5000"
+        volumes: 
+            - $PWD/pongFiles/src:/pongFiles/src
+        environment:
+            - NAME=RabbitMQ_Container
+        logging: 
+            driver: gelf
+            options:
+                gelf-address: udp://localhost:9600
+                tag: faultApp
+                
+        depends_on:
+            logstash:
+                condition: service_healthy
+
+   #Log Parser
+    logstash:
+        container_name: Logstash
+        build:
+            context: ./logstashFiles
+            args:
+                ELK_VERSION: 7.8.0
+        volumes:
+            - type: bind
+              source: ./logstashFiles/config/logstash.yml
+              target: /usr/share/logstash/config/logstash.yml
+              read_only: true
+            - type: bind
+              source: ./logstashFiles/pipeline
+              target: /usr/share/logstash/pipeline
+              read_only: true
+            - type: bind
+              source: ./logstashFiles/log
+              target: /usr/share/logstash/log
+        ports:
+            - "9600:9600/udp"
+        environment:
+            LS_JAVA_OPTS: "-Xmx256m -Xms256m"
+        healthcheck:
+            test: curl -s -XGET 'http://127.0.0.1:9600'
+            interval: 30s
+            timeout: 5s
+            retries: 4

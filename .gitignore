@@ -30,3 +30,5 @@ target/*
 # Intellij #
 *.iml
 .idea
+/data/.vscode/
+/data/.history/
