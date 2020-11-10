@@ -14,6 +14,7 @@ import model.StaticBinding;
 import java.util.*;
 
 public class WhyAlgorithm {
+    private static int lineRead;
 
     /**
      * Return the causality graph
@@ -35,6 +36,9 @@ public class WhyAlgorithm {
         String nodeName = logs.get(i).get(0).getNodeName();
         WhyEvent result = new CausesEvent(i, nodeName, ts, tSFirst);
         ArrayList<WhyEvent> events = new ArrayList<>(Collections.singletonList(result));
+
+        // Counter of the logs read
+        lineRead = 0;
 
         //Explain events
         ArrayList<WhyEvent> toBeExplained = new ArrayList<>(Collections.singletonList(result));
@@ -114,6 +118,7 @@ public class WhyAlgorithm {
             }
         }
 
+        System.out.println("Logs read: " + lineRead);
         // Return causality graph
         return result;
     }
@@ -160,6 +165,7 @@ public class WhyAlgorithm {
         while (iterator.hasPrevious()) {
             LogFormat tmp = iterator.previous();
             if (LogOp.compareTs(Double.toString(tD), tmp.getTimestamp()) > 0) {
+                ++lineRead;
                 return new CustomPair<>(tmp.getTimestamp(), tmp.getInfo());
             }
         }
@@ -176,6 +182,7 @@ public class WhyAlgorithm {
     private static boolean previousInLogs(CustomPair<String, String> pair, ArrayList<LogFormat> logs) {
         for (LogFormat logElement : logs) {
             if (LogOp.compareTs(logElement.getTimestamp(), pair.get_time()) == 0 && logElement.getInfo().equals(pair.get_info())) {
+                ++lineRead;
                 return true;
             }
         }
