@@ -1,7 +1,7 @@
 package canalyzer.algorithm;
 
 import canalyzer.algorithm.eventType.CausesEvent;
-import canalyzer.algorithm.eventType.ThunderboltEvent;
+import canalyzer.algorithm.eventType.CrashEvent;
 import canalyzer.algorithm.eventType.WhyEvent;
 import canalyzer.utilities.log.LogFormat;
 import canalyzer.utilities.log.LogManager;
@@ -44,25 +44,25 @@ public class WhyAlgorithm {
 
             //Check if event is "truly" to be explained
             List<String> tmpOps = A.getNodes().get(tmp.getNodeName()).getOps();
-            if (!tmpOps.contains(tmp.getTSFirst().getRight())) {
+            if (!tmpOps.contains(tmp.getTSFirst().get_info())) {
                 //Node instances always can "unexpectedly fail"
-                tmp.addCause(new ThunderboltEvent(tmp.getInstance(), tmp.getNodeName(), true));
+                tmp.addCause(new CrashEvent(tmp.getInstance(), tmp.getNodeName(), true));
                 events.add(tmp);
 
                 //Can the event also be caused by a fault handler?
                 Node N = A.getNodes().get(logs.get(tmp.getInstance()).get(0).getNodeName());
-                String x = tmp.getTS().getRight();
-                String xf = tmp.getTSFirst().getRight();
+                String x = tmp.getTS().get_info();
+                String xf = tmp.getTSFirst().get_info();
                 // Check if the pair <x,x'> is in the fault handler of N
                 if (checkFaultHandler(N.getManagementProtocol().getPhi(), x, xf)) {
                     // If yes,isolate starting time for state x and...
                     // txSecond is equivalent to <t'',x''> in theoretical Why algorithm
-                    CustomPair<String, String> txSecond = new CustomPair<>(tmp.getTS().getLeft(), tmp.getTS().getRight());
-                    String tStart = txSecond.getLeft();
+                    CustomPair<String, String> txSecond = new CustomPair<>(tmp.getTS().get_time(), tmp.getTS().get_info());
+                    String tStart = txSecond.get_time();
                     ArrayList<LogFormat> iLogs = LogManager.getInstance().getLogsByNodeIdOrNodeContainerId(i);
-                    while (txSecond.getRight().equals(tmp.getTS().getRight()) && previousInLogs(previous(txSecond.getLeft(), iLogs), iLogs)) {
-                        tStart = txSecond.getLeft();
-                        txSecond = previous(txSecond.getLeft(), iLogs);
+                    while (txSecond.get_info().equals(tmp.getTS().get_info()) && previousInLogs(previous(txSecond.get_time(), iLogs), iLogs)) {
+                        tStart = txSecond.get_time();
+                        txSecond = previous(txSecond.get_time(), iLogs);
                     }
                     //...explain each possibly faulted requirement
                     List<Requirement> pFaultedRequirements = possiblyFaultedRequirements(
@@ -87,18 +87,18 @@ public class WhyAlgorithm {
                                 // uy is equivalent to <u,y> of Why theoretical algorithm
                                 CustomPair<String, String> uy = previous(tStart, jLog);
                                 // uyFirst is equivalent to <u',y'> of Why theoretical algorithm
-                                CustomPair<String, String> uyFirst = previous(tmp.getTSFirst().getLeft(), jLog);
-                                while (LogOp.compareTs(uyFirst.getLeft(), uy.getLeft()) >= 0 &&
-                                        checkIfBelongsTo(r, N.getName(), M, uyFirst.getRight(), A)) {
-                                    uyFirst = previous(uyFirst.getLeft(), jLog);
+                                CustomPair<String, String> uyFirst = previous(tmp.getTSFirst().get_time(), jLog);
+                                while (LogOp.compareTs(uyFirst.get_time(), uy.get_time()) >= 0 &&
+                                        checkIfBelongsTo(r, N.getName(), M, uyFirst.get_info(), A)) {
+                                    uyFirst = previous(uyFirst.get_time(), jLog);
                                 }
                                 CustomPair<String, String> vW = new CustomPair<>();
-                                while (LogOp.compareTs(uyFirst.getLeft(), uy.getLeft()) >= 0 &&
-                                        !checkIfBelongsTo(r, N.getName(), M, uyFirst.getRight(), A)) {
-                                    vW.setAll(uyFirst.getLeft(), uyFirst.getRight());
-                                    uyFirst = previous(uyFirst.getLeft(), jLog);
+                                while (LogOp.compareTs(uyFirst.get_time(), uy.get_time()) >= 0 &&
+                                        !checkIfBelongsTo(r, N.getName(), M, uyFirst.get_info(), A)) {
+                                    vW.setAll(uyFirst.get_time(), uyFirst.get_info());
+                                    uyFirst = previous(uyFirst.get_time(), jLog);
                                 }
-                                if (LogOp.compareTs(uyFirst.getLeft(), uy.getLeft()) >= 0) {
+                                if (LogOp.compareTs(uyFirst.get_time(), uy.get_time()) >= 0) {
                                     WhyEvent c = new CausesEvent(j, jNodeName, uyFirst, vW);
                                     if (!events.contains(c)) {
                                         toBeExplained.add(c);
@@ -175,7 +175,7 @@ public class WhyAlgorithm {
      */
     private static boolean previousInLogs(CustomPair<String, String> pair, ArrayList<LogFormat> logs) {
         for (LogFormat logElement : logs) {
-            if (LogOp.compareTs(logElement.getTimestamp(), pair.getLeft()) == 0 && logElement.getInfo().equals(pair.getRight())) {
+            if (LogOp.compareTs(logElement.getTimestamp(), pair.get_time()) == 0 && logElement.getInfo().equals(pair.get_info())) {
                 return true;
             }
         }

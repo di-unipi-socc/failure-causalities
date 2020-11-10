@@ -1,43 +1,40 @@
 package canalyzer.algorithm;
 
 public class CustomPair<L,R> {
-    private L left;
-    private R right;
+    private L _time;
+    private R _info;
 
     public CustomPair() {
     }
 
-    public CustomPair(L left, R right) {
-        this.left = left;
-        this.right = right;
+    public CustomPair(L _time, R _info) {
+        this._time = _time;
+        this._info = _info;
     }
 
-    public L getLeft() {
-        return left;
+    public L get_time() {
+        return _time;
     }
 
-    public void setLeft(L left) {
-        this.left = left;
+
+    public R get_info() {
+        return _info;
     }
 
-    public R getRight() {
-        return right;
-    }
-
-    public void setRight(R right) {
-        this.right = right;
+    public void set_info(R _info) {
+        this._info = _info;
     }
 
     public void setAll(L left, R right){
-        this.left = left;
-        this.right = right;
+        this._time = left;
+        this._info = right;
     }
 
     @Override
     public String toString() {
         return "{" +
-                "left=" + left +
-                ", right=" + right +
+                "time=" + _time +
+                ", info=" + _info +
                 '}';
     }
 }

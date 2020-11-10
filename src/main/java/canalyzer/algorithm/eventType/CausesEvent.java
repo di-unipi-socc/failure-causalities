@@ -46,8 +46,8 @@ public class CausesEvent extends WhyEvent {
         return "{" +
                 "instance: " + super.getInstance() +
                 "nodeName:" + super.getNodeName()  +
-                "< t , s >:" + "< " + tS.getLeft() + " , " + tS.getRight() + " >" +
-                "< t' , s' >:" + "< " + tSFirst.getLeft() + " , " + tSFirst.getRight() + " >"+
+                "< t , s >:" + "< " + tS.get_time() + " , " + tS.get_info() + " >" +
+                "< t' , s' >:" + "< " + tSFirst.get_time() + " , " + tSFirst.get_info() + " >"+
                 "causes: " + causes +
                 "}"
                 ;

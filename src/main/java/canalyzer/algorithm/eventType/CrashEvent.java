@@ -2,11 +2,11 @@ package canalyzer.algorithm.eventType;
 
 import org.jetbrains.annotations.NotNull;
 
-public class ThunderboltEvent extends WhyEvent {
+public class CrashEvent extends WhyEvent {
 
     private boolean bolt;
 
-    public ThunderboltEvent(@NotNull String instance, @NotNull String nodeName, boolean bolt) {
+    public CrashEvent(@NotNull String instance, @NotNull String nodeName, boolean bolt) {
         super(instance, nodeName);
         this.bolt = bolt;
     }
