@@ -41,7 +41,7 @@ Step by step command and their consequences:
 Other Containers remain up.
 
 --- 
-###onwTwo.log
+###oneTwo.log
 Step by step command and their consequences:
 - Docker compose up
     - Starts all containers
