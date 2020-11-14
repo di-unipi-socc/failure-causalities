@@ -37,7 +37,7 @@ if __name__ == "__main__":
     for item in subSet:
         print("- " + item.name)
 
-    print("Lets the errors flow a bit...")
+    print("Let the errors flow a bit...")
     sleep(10)
     print("Removing all containers...")
     subprocess.call(["docker-compose", "-f", dockerComposeFile, "down"], stdout=subprocess.DEVNULL,

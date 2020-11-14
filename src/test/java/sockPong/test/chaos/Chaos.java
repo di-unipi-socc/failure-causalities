@@ -34,9 +34,9 @@ public class Chaos {
         String i = "c4093865100c3be6f0b895de864dde5629a76e9d71fc0c46880ba9a05efff312";
         Hashtable<String, ArrayList<LogFormat>> logs = LogManager.getInstance().getLogs();
 
+        System.out.println("Chaos1: ");
         WhyEvent p =  WhyAlgorithm.why(i, ts, tsFirst, logs, app);
         String printable = gson.toJson(p);
-        System.out.println("Chaos1: ");
         System.out.println(printable);
 
         System.out.println("-------------------------------------------------------------------------------------");
@@ -49,9 +49,9 @@ public class Chaos {
         tsFirst = new CustomPair<>("1604504760.8331242", "faulted");
         i = "5d8da105ffe64e075781c7915402c4d98b8a2a05a9a89704bfe06f6d685c9534";
         logs = LogManager.getInstance().getLogs();
+        System.out.println("Chaos2: ");
         p = WhyAlgorithm.why(i, ts, tsFirst, logs, app);
         printable = gson.toJson(p);
-        System.out.println("Chaos2: ");
         System.out.println(printable);
 
         System.out.println("--------------------------------------------------------------------------------------");
@@ -64,9 +64,9 @@ public class Chaos {
         tsFirst = new CustomPair<>("1604505155.17712", "faulted");
         i = "805a46898254403ae68bd972bc412fd4fb8ed87aa70f3606f95bd7d9e27736fe";
         logs = LogManager.getInstance().getLogs();
+        System.out.println("Chaos3: ");
         p = WhyAlgorithm.why(i, ts, tsFirst, logs, app);
         printable = gson.toJson(p);
-        System.out.println("Chaos3: ");
         System.out.println(printable);
 
         System.out.println("--------------------------------------------------------------------------------------");
@@ -79,9 +79,9 @@ public class Chaos {
         tsFirst = new CustomPair<>("1604505270.3296633", "faulted");
         i = "e42fc04474cf67e3c69914ab5c6fdb3c5a6ebf185eacdc68531de0a3cb49ce4e";
         logs = LogManager.getInstance().getLogs();
+        System.out.println("Chaos4: ");
         p = WhyAlgorithm.why(i, ts, tsFirst, logs, app);
         printable = gson.toJson(p);
-        System.out.println("Chaos4: ");
         System.out.println(printable);
 
         System.out.println("--------------------------------------------------------------------------------------");
@@ -94,9 +94,9 @@ public class Chaos {
         tsFirst = new CustomPair<>("1604505402.4833488", "faulted");
         i = "5af14f32881734272e9712bc758bdeacdd9544d9fd2d29d58093aae3a5fd0a71";
         logs = LogManager.getInstance().getLogs();
+        System.out.println("Chaos5: ");
         p = WhyAlgorithm.why(i, ts, tsFirst, logs, app);
         printable = gson.toJson(p);
-        System.out.println("Chaos5: ");
         System.out.println(printable);
 
         System.out.println("--------------------------------------------------------------------------------------");
@@ -109,9 +109,9 @@ public class Chaos {
         tsFirst = new CustomPair<>("1604505971.9530907", "faulted");
         i = "650cfb6395068afa61aefac780991df430d68838e3ccf15d8ae2cabcddff35b4";
         logs = LogManager.getInstance().getLogs();
+        System.out.println("Chaos6: ");
         p = WhyAlgorithm.why(i, ts, tsFirst, logs, app);
         printable = gson.toJson(p);
-        System.out.println("Chaos6: ");
         System.out.println(printable);
 
         System.out.println("--------------------------------------------------------------------------------------");
@@ -124,9 +124,9 @@ public class Chaos {
         tsFirst = new CustomPair<>("1604507383.663012", "faulted");
         i = "fd63fe6152efd102bd87cb937ebb9f9c2a92e526ac8308908d215c9fe240c03f";
         logs = LogManager.getInstance().getLogs();
+        System.out.println("Chaos7: ");
         p = WhyAlgorithm.why(i, ts, tsFirst, logs, app);
         printable = gson.toJson(p);
-        System.out.println("Chaos7: ");
         System.out.println(printable);
 
         System.out.println("--------------------------------------------------------------------------------------");
@@ -139,9 +139,9 @@ public class Chaos {
         tsFirst = new CustomPair<>("1604505678.5972779", "faulted");
         i = "b29c0f42c20ca7919ed0844815f9b9d745cdfbf64174a202f0a1980fb2d643a2";
         logs = LogManager.getInstance().getLogs();
+        System.out.println("Chaos8: ");
         p = WhyAlgorithm.why(i, ts, tsFirst, logs, app);
         printable = gson.toJson(p);
-        System.out.println("Chaos8: ");
         System.out.println(printable);
 
         System.out.println("--------------------------------------------------------------------------------------");
@@ -154,9 +154,9 @@ public class Chaos {
         tsFirst = new CustomPair<>("1604505798.7512248", "faulted");
         i = "54daffa9a30d862799386f591bbd93eecc0d845f4f939f313c67998b8c2e37c7";
         logs = LogManager.getInstance().getLogs();
+        System.out.println("Chaos9: ");
         p = WhyAlgorithm.why(i, ts, tsFirst, logs, app);
         printable = gson.toJson(p);
-        System.out.println("Chaos9: ");
         System.out.println(printable);
 
         System.out.println("--------------------------------------------------------------------------------------");
@@ -169,9 +169,9 @@ public class Chaos {
         tsFirst = new CustomPair<>("1604506129.5859592", "faulted");
         i = "aaac69481bc1d9f0a0733ae8290d0e8dcb698a93366c8a3f3040da3ceb067288";
         logs = LogManager.getInstance().getLogs();
+        System.out.println("Chaos10: ");
         p = WhyAlgorithm.why(i, ts, tsFirst, logs, app);
         printable = gson.toJson(p);
-        System.out.println("Chaos10: ");
         System.out.println(printable);
 
         System.out.println("--------------------------------------------------------------------------------------");
@@ -195,10 +195,9 @@ public class Chaos {
         CustomPair<String,String> tsFirst = new CustomPair<>("1604566106.8039083", "faulted");
         String i = "bb07c2e6a58ca504c8bb5d37659e9294e68698a355f71ea4e85bb6412b6aa469";
         Hashtable<String, ArrayList<LogFormat>> logs = LogManager.getInstance().getLogs();
-
+        System.out.println("Chaos11: ");
         WhyEvent p =  WhyAlgorithm.why(i, ts, tsFirst, logs, app);
         String printable = gson.toJson(p);
-        System.out.println("Chaos11: ");
         System.out.println(printable);
 
         System.out.println("-------------------------------------------------------------------------------------");
@@ -211,9 +210,9 @@ public class Chaos {
         tsFirst = new CustomPair<>("1604566227.389768", "faulted");
         i = "85bb356140584834ceb6514947953b576a94e7dc3a46a258675b52227b6511ba";
         logs = LogManager.getInstance().getLogs();
+        System.out.println("Chaos12: ");
         p = WhyAlgorithm.why(i, ts, tsFirst, logs, app);
         printable = gson.toJson(p);
-        System.out.println("Chaos12: ");
         System.out.println(printable);
 
         System.out.println("--------------------------------------------------------------------------------------");
@@ -226,9 +225,9 @@ public class Chaos {
         tsFirst = new CustomPair<>("1604566351.4461143", "faulted");
         i = "6cc68e4fc1b86c79d51c62c3240c0183e73da296e837e70fd4707420610cd44b";
         logs = LogManager.getInstance().getLogs();
+        System.out.println("Chaos13: ");
         p = WhyAlgorithm.why(i, ts, tsFirst, logs, app);
         printable = gson.toJson(p);
-        System.out.println("Chaos13: ");
         System.out.println(printable);
 
         System.out.println("--------------------------------------------------------------------------------------");
@@ -241,9 +240,9 @@ public class Chaos {
         tsFirst = new CustomPair<>("1604566505.3788095", "faulted");
         i = "034da7c6d8495cb889b8c1b5c64433492c91627857e3ae70edab2bb1abeb7dfe";
         logs = LogManager.getInstance().getLogs();
+        System.out.println("Chaos14: ");
         p = WhyAlgorithm.why(i, ts, tsFirst, logs, app);
         printable = gson.toJson(p);
-        System.out.println("Chaos14: ");
         System.out.println(printable);
 
         System.out.println("--------------------------------------------------------------------------------------");
@@ -256,9 +255,9 @@ public class Chaos {
         tsFirst = new CustomPair<>("1604566684.735155", "faulted");
         i = "74b8b127219869e948a241ba7b82c17d50b56af7482978ced9b360d0156c566c";
         logs = LogManager.getInstance().getLogs();
+        System.out.println("Chaos15: ");
         p = WhyAlgorithm.why(i, ts, tsFirst, logs, app);
         printable = gson.toJson(p);
-        System.out.println("Chaos15: ");
         System.out.println(printable);
 
         System.out.println("--------------------------------------------------------------------------------------");
@@ -271,9 +270,9 @@ public class Chaos {
         tsFirst = new CustomPair<>("1604566944.4510186", "faulted");
         i = "57b94a674e9efd4f005f2dee8fb529b80fb14b69fc43cfafe7cd9f006bf56412";
         logs = LogManager.getInstance().getLogs();
+        System.out.println("Chaos16: ");
         p = WhyAlgorithm.why(i, ts, tsFirst, logs, app);
         printable = gson.toJson(p);
-        System.out.println("Chaos16: ");
         System.out.println(printable);
 
         System.out.println("--------------------------------------------------------------------------------------");
@@ -286,9 +285,9 @@ public class Chaos {
         tsFirst = new CustomPair<>("1604567163.362812", "stop");
         i = "54c0b4d08391834af113c9b92ce49910a904d5cabedb77006835c9eec2531092";
         logs = LogManager.getInstance().getLogs();
+        System.out.println("Chaos17: ");
         p = WhyAlgorithm.why(i, ts, tsFirst, logs, app);
         printable = gson.toJson(p);
-        System.out.println("Chaos17: ");
         System.out.println(printable);
 
         System.out.println("--------------------------------------------------------------------------------------");
@@ -301,9 +300,9 @@ public class Chaos {
         tsFirst = new CustomPair<>("1604567330.3551586", "faulted");
         i = "009cfdd4fae66e08dab2f47f52ce29ceb7299e6b0dea4dfc47e5b8ce3ae93772";
         logs = LogManager.getInstance().getLogs();
+        System.out.println("Chaos18: ");
         p = WhyAlgorithm.why(i, ts, tsFirst, logs, app);
         printable = gson.toJson(p);
-        System.out.println("Chaos18: ");
         System.out.println(printable);
 
         System.out.println("--------------------------------------------------------------------------------------");
@@ -316,9 +315,9 @@ public class Chaos {
         tsFirst = new CustomPair<>("1604567454.646177", "faulted");
         i = "22aabf97ca541f6cfaf172172331ceca115711a5537190ecc2b4b013800cc552";
         logs = LogManager.getInstance().getLogs();
+        System.out.println("Chaos19: ");
         p = WhyAlgorithm.why(i, ts, tsFirst, logs, app);
         printable = gson.toJson(p);
-        System.out.println("Chaos19: ");
         System.out.println(printable);
 
         System.out.println("--------------------------------------------------------------------------------------");
@@ -331,9 +330,9 @@ public class Chaos {
         tsFirst = new CustomPair<>("1604567612.8635566", "faulted");
         i = "5f74f077ac92e25d5f0428707ba94dee3782d52db068bb4ff81b514114658381";
         logs = LogManager.getInstance().getLogs();
+        System.out.println("Chaos20: ");
         p = WhyAlgorithm.why(i, ts, tsFirst, logs, app);
         printable = gson.toJson(p);
-        System.out.println("Chaos20: ");
         System.out.println(printable);
 
         System.out.println("--------------------------------------------------------------------------------------");
@@ -355,10 +354,9 @@ public class Chaos {
         CustomPair<String,String> tsFirst = new CustomPair<>("1604571642.8468482", "faulted");
         String i = "c0bba013a4f879f339712efbdf4b499665d5bd6bcb3c11e9cf3303da1d978d0e";
         Hashtable<String, ArrayList<LogFormat>> logs = LogManager.getInstance().getLogs();
-
+        System.out.println("Chaos21: ");
         WhyEvent p =  WhyAlgorithm.why(i, ts, tsFirst, logs, app);
         String printable = gson.toJson(p);
-        System.out.println("Chaos21: ");
         System.out.println(printable);
 
         System.out.println("-------------------------------------------------------------------------------------");
@@ -371,9 +369,9 @@ public class Chaos {
         tsFirst = new CustomPair<>("1604570153.8964303", "faulted");
         i = "e54d3716241147f977da485ad48a7390789a76cdc46b93652c8e906b27e8035d";
         logs = LogManager.getInstance().getLogs();
+        System.out.println("Chaos22: ");
         p = WhyAlgorithm.why(i, ts, tsFirst, logs, app);
         printable = gson.toJson(p);
-        System.out.println("Chaos22: ");
         System.out.println(printable);
 
         System.out.println("--------------------------------------------------------------------------------------");
@@ -386,9 +384,9 @@ public class Chaos {
         tsFirst = new CustomPair<>("1604570255.1941745", "faulted");
         i = "fa166342fa22061a365c115bd140ebeebb45a70f60b27128f97ed616a34fc2c3";
         logs = LogManager.getInstance().getLogs();
+        System.out.println("Chaos23: ");
         p = WhyAlgorithm.why(i, ts, tsFirst, logs, app);
         printable = gson.toJson(p);
-        System.out.println("Chaos23: ");
         System.out.println(printable);
 
         System.out.println("--------------------------------------------------------------------------------------");
@@ -401,9 +399,9 @@ public class Chaos {
         tsFirst = new CustomPair<>("1604570391.881797", "faulted");
         i = "9b171bf0dfdafe755eb1795c6d99ebb7cb1cc6345d3bf5d135a31cbdb603580e";
         logs = LogManager.getInstance().getLogs();
+        System.out.println("Chaos24: ");
         p = WhyAlgorithm.why(i, ts, tsFirst, logs, app);
         printable = gson.toJson(p);
-        System.out.println("Chaos24: ");
         System.out.println(printable);
 
         System.out.println("--------------------------------------------------------------------------------------");
@@ -416,9 +414,9 @@ public class Chaos {
         tsFirst = new CustomPair<>("1604570653.4362543", "faulted");
         i = "5a13f6bc15757813ec5aa267789cb21f706976ee30459582786383d476e7a343";
         logs = LogManager.getInstance().getLogs();
+        System.out.println("Chaos25: ");
         p = WhyAlgorithm.why(i, ts, tsFirst, logs, app);
         printable = gson.toJson(p);
-        System.out.println("Chaos25: ");
         System.out.println(printable);
 
         System.out.println("--------------------------------------------------------------------------------------");
@@ -431,9 +429,9 @@ public class Chaos {
         tsFirst = new CustomPair<>("1604570744.529898", "faulted");
         i = "f47f40bb74123d025f4fc1e9c934e1f92e54310b704fbc170f9eb42691804ef5";
         logs = LogManager.getInstance().getLogs();
+        System.out.println("Chaos26: ");
         p = WhyAlgorithm.why(i, ts, tsFirst, logs, app);
         printable = gson.toJson(p);
-        System.out.println("Chaos26: ");
         System.out.println(printable);
 
         System.out.println("--------------------------------------------------------------------------------------");
@@ -446,9 +444,9 @@ public class Chaos {
         tsFirst = new CustomPair<>("1604570824.0838425", "faulted");
         i = "4fc96f7901b171b4f4507bdfbcd8fa537d23e5fcde4cbac58dc706da790c044e";
         logs = LogManager.getInstance().getLogs();
+        System.out.println("Chaos27: ");
         p = WhyAlgorithm.why(i, ts, tsFirst, logs, app);
         printable = gson.toJson(p);
-        System.out.println("Chaos27: ");
         System.out.println(printable);
 
         System.out.println("--------------------------------------------------------------------------------------");
@@ -461,9 +459,9 @@ public class Chaos {
         tsFirst = new CustomPair<>("1604570903.676831", "faulted");
         i = "cb7742028635b72efd2b16a1ee5f40007b15286d4d8b3b69ef33e0f316535e64";
         logs = LogManager.getInstance().getLogs();
+        System.out.println("Chaos28: ");
         p = WhyAlgorithm.why(i, ts, tsFirst, logs, app);
         printable = gson.toJson(p);
-        System.out.println("Chaos28: ");
         System.out.println(printable);
 
         System.out.println("--------------------------------------------------------------------------------------");
@@ -476,9 +474,9 @@ public class Chaos {
         tsFirst = new CustomPair<>("1604570989.0088277", "faulted");
         i = "bf39bad7354e12862dc2aa04fd1f934a230b52f98ebcb028c915d413046db28d";
         logs = LogManager.getInstance().getLogs();
+        System.out.println("Chaos29: ");
         p = WhyAlgorithm.why(i, ts, tsFirst, logs, app);
         printable = gson.toJson(p);
-        System.out.println("Chaos29: ");
         System.out.println(printable);
 
         System.out.println("--------------------------------------------------------------------------------------");
@@ -491,9 +489,9 @@ public class Chaos {
         tsFirst = new CustomPair<>("1604571072.2461488", "faulted");
         i = "3e62640582f2f1f76afea604fcd60bec100ec27589f56496bab9a45682c6ec20";
         logs = LogManager.getInstance().getLogs();
+        System.out.println("Chaos30: ");
         p = WhyAlgorithm.why(i, ts, tsFirst, logs, app);
         printable = gson.toJson(p);
-        System.out.println("Chaos30: ");
         System.out.println(printable);
 
         System.out.println("--------------------------------------------------------------------------------------");

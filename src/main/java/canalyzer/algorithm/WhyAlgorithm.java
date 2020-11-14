@@ -43,28 +43,28 @@ public class WhyAlgorithm {
         //Explain events
         ArrayList<WhyEvent> toBeExplained = new ArrayList<>(Collections.singletonList(result));
         while (!toBeExplained.isEmpty()) {
-            //tmp is the first element in the list to be explained
-            CausesEvent tmp = (CausesEvent) toBeExplained.remove(0);
+            //toBExp is the first element in the list to be explained
+            CausesEvent toBExp = (CausesEvent) toBeExplained.remove(0);
 
             //Check if event is "truly" to be explained
-            List<String> tmpOps = A.getNodes().get(tmp.getNodeName()).getOps();
-            if (!tmpOps.contains(tmp.getTSFirst().get_info())) {
+            List<String> tmpOps = A.getNodes().get(toBExp.getNodeName()).getOps();
+            if (!tmpOps.contains(toBExp.getTSFirst().get_info())) {
                 //Node instances always can "unexpectedly fail"
-                tmp.addCause(new CrashEvent(tmp.getInstance(), tmp.getNodeName(), true));
-                events.add(tmp);
+                toBExp.addCause(new CrashEvent(toBExp.getInstance(), toBExp.getNodeName(), true));
+                events.add(toBExp);
 
                 //Can the event also be caused by a fault handler?
-                Node N = A.getNodes().get(logs.get(tmp.getInstance()).get(0).getNodeName());
-                String x = tmp.getTS().get_info();
-                String xf = tmp.getTSFirst().get_info();
+                Node N = A.getNodes().get(logs.get(toBExp.getInstance()).get(0).getNodeName());
+                String x = toBExp.getTS().get_info();
+                String xf = toBExp.getTSFirst().get_info();
                 // Check if the pair <x,x'> is in the fault handler of N
                 if (checkFaultHandler(N.getManagementProtocol().getPhi(), x, xf)) {
                     // If yes,isolate starting time for state x and...
                     // txSecond is equivalent to <t'',x''> in theoretical Why algorithm
-                    CustomPair<String, String> txSecond = new CustomPair<>(tmp.getTS().get_time(), tmp.getTS().get_info());
+                    CustomPair<String, String> txSecond = new CustomPair<>(toBExp.getTS().get_time(), toBExp.getTS().get_info());
                     String tStart = txSecond.get_time();
                     ArrayList<LogFormat> iLogs = LogManager.getInstance().getLogsByNodeIdOrNodeContainerId(i);
-                    while (txSecond.get_info().equals(tmp.getTS().get_info()) && previousInLogs(previous(txSecond.get_time(), iLogs), iLogs)) {
+                    while (txSecond.get_info().equals(toBExp.getTS().get_info()) && previousInLogs(previous(txSecond.get_time(), iLogs), iLogs)) {
                         tStart = txSecond.get_time();
                         txSecond = previous(txSecond.get_time(), iLogs);
                     }
@@ -91,16 +91,19 @@ public class WhyAlgorithm {
                                 // uy is equivalent to <u,y> of Why theoretical algorithm
                                 CustomPair<String, String> uy = previous(tStart, jLog);
                                 // uyFirst is equivalent to <u',y'> of Why theoretical algorithm
-                                CustomPair<String, String> uyFirst = previous(tmp.getTSFirst().get_time(), jLog);
+                                CustomPair<String, String> uyFirst = previous(toBExp.getTSFirst().get_time(), jLog);
+                                lineRead+=2;
                                 while (LogOp.compareTs(uyFirst.get_time(), uy.get_time()) >= 0 &&
                                         checkIfBelongsTo(r, N.getName(), M, uyFirst.get_info(), A)) {
                                     uyFirst = previous(uyFirst.get_time(), jLog);
+                                    ++lineRead;
                                 }
                                 CustomPair<String, String> vW = new CustomPair<>();
                                 while (LogOp.compareTs(uyFirst.get_time(), uy.get_time()) >= 0 &&
                                         !checkIfBelongsTo(r, N.getName(), M, uyFirst.get_info(), A)) {
                                     vW.setAll(uyFirst.get_time(), uyFirst.get_info());
                                     uyFirst = previous(uyFirst.get_time(), jLog);
+                                    ++lineRead;
                                 }
                                 if (LogOp.compareTs(uyFirst.get_time(), uy.get_time()) >= 0) {
                                     WhyEvent c = new CausesEvent(j, jNodeName, uyFirst, vW);
@@ -108,7 +111,10 @@ public class WhyAlgorithm {
                                         toBeExplained.add(c);
                                     }
                                     events.add(c);
-                                    tmp.addCause(c);
+                                    toBExp.addCause(c);
+                                }
+                                else{
+                                    lineRead-=2;
                                 }
                             }
 
@@ -118,7 +124,8 @@ public class WhyAlgorithm {
             }
         }
 
-        System.out.println("Logs read: " + lineRead);
+        // Prints the number of log's line parsed with Why
+//        System.out.println("Logs read: " + lineRead);
         // Return causality graph
         return result;
     }
@@ -182,7 +189,6 @@ public class WhyAlgorithm {
     private static boolean previousInLogs(CustomPair<String, String> pair, ArrayList<LogFormat> logs) {
         for (LogFormat logElement : logs) {
             if (LogOp.compareTs(logElement.getTimestamp(), pair.get_time()) == 0 && logElement.getInfo().equals(pair.get_info())) {
-                ++lineRead;
                 return true;
             }
         }
