@@ -32,11 +32,12 @@ This repository also includes all what needed to run chaos testing on the librar
 
 ## About 
 The algorithm implemented by this library was first presented in 
-```
-Paper information hidden for double-blind review reasons
-```
+> J. Soldani, G. Montesano, A. Brogi. 
+> **What Went Wrong? Explaining Cascading Failures in Microservice-based Applications**. 
+> 15th Symposium and Summer School On  Service-Oriented Computing (SummerSOC 2021), _accepted for publication_.
+
 If you wish to reuse the library or its sources, please properly cite the above mentioned paper. Below you can please find the BibTex reference:
 ```
-Paper information hidden for double-blind review reasons
+TBA
 ```
 
